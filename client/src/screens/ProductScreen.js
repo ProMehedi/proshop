@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
 import { Button, Col, Image, ListGroup, Row } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import Rating from '../components/Rating'
-import products from '../products'
 
 const ProductScreen = ({ match }) => {
+  const [product, setProduct] = useState({})
   const [qty, setQty] = useState(1)
 
   const qtyHandler = (e) => {
@@ -15,7 +16,14 @@ const ProductScreen = ({ match }) => {
     }
   }
 
-  const product = products.find((p) => p._id === match.params.id)
+  useEffect(() => {
+    const fetchProduct = async () => {
+      const { data } = await axios.get(`/api/products/${match.params.id}`)
+      setProduct(data)
+    }
+
+    fetchProduct()
+  }, [match.params.id])
 
   return (
     <>
