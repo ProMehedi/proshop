@@ -1,0 +1,23 @@
+{
+  "name": "pro-shop",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ProMehedi/proshop.git"
+  },
+  "author": "Mehedi Hasan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ProMehedi/proshop/issues"
+  },
+  "homepage": "https://github.com/ProMehedi/proshop#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
