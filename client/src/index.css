@@ -1,0 +1,20 @@
+@import 'https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css';
+@import 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css';
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+main {
+  min-height: 90vh;
+}
+
+.productTitle {
+  font-size: 18px;
+}
+
+.productPrice {
+  font-size: 20px;
+}
