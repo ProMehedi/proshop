@@ -23,7 +23,7 @@ const ProductScreen = ({ match }) => {
     }
 
     fetchProduct()
-  }, [match.params.id])
+  }, [match])
 
   return (
     <>
@@ -40,7 +40,7 @@ const ProductScreen = ({ match }) => {
             <ListGroup.Item className='px-0'>
               <h3>{product.name}</h3>
               <Rating
-                value={product.rating}
+                value={parseInt(product.rating)}
                 text={`${product.numReviews} Reviews`}
               />
             </ListGroup.Item>
