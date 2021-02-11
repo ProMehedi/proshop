@@ -7,7 +7,7 @@ import SyncLoader from 'react-spinners/SyncLoader'
 import Message from '../components/Message'
 import Rating from '../components/Rating'
 
-const ProductScreen = ({ match }) => {
+const ProductScreen = ({ match, history }) => {
   const dispatch = useDispatch()
 
   const [qty, setQty] = useState(1)
@@ -26,6 +26,10 @@ const ProductScreen = ({ match }) => {
   useEffect(() => {
     dispatch(listProductDetails(match.params.id))
   }, [dispatch, match])
+
+  const addToCartHandler = () => {
+    history.push(`/cart/${match.params.id}?qty=${qty}`)
+  }
 
   return (
     <>
@@ -98,11 +102,12 @@ const ProductScreen = ({ match }) => {
                       max={product.countInStock}
                       value={qty}
                       onChange={qtyHandler}
+                      disabled={product.countInStock === 0 ? true : false}
                     />
                   </div>
                   <Button
                     variant='primary'
-                    onClick={() => console.log('test')}
+                    onClick={addToCartHandler}
                     disabled={product.countInStock === 0 ? true : false}
                   >
                     <i className='fa fa-shopping-cart'></i> Add To Cart
