@@ -3,6 +3,8 @@ import { Col, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { listProducts } from '../actions/productActions'
 import Product from '../components/Product'
+import SyncLoader from 'react-spinners/SyncLoader'
+import Message from '../components/Message'
 
 const HomeScreen = () => {
   const dispatch = useDispatch()
@@ -18,9 +20,11 @@ const HomeScreen = () => {
     <>
       <h1 className='mb-3'>Latest Products</h1>
       {loading ? (
-        <h2>Loading...</h2>
+        <div className='lazyLoader text-center m-5'>
+          <SyncLoader color='#ff6138' size={15} />
+        </div>
       ) : error ? (
-        <h2>{error}</h2>
+        <Message variant='danger'>{error}</Message>
       ) : (
         <Row>
           {products.map((product) => (
