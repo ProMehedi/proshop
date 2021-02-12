@@ -3,7 +3,7 @@ import SyncLoader from 'react-spinners/SyncLoader'
 import { Button, Col, Form, Row } from 'react-bootstrap'
 import Message from '../components/Message'
 import { useDispatch, useSelector } from 'react-redux'
-import { getUserDetails } from '../actions/userActions'
+import { getUserDetails, updateUserProfile } from '../actions/userActions'
 
 const ProfileScreen = ({ history }) => {
   const [name, setName] = useState('')
@@ -20,9 +20,12 @@ const ProfileScreen = ({ history }) => {
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
 
+  const userUpdateProfile = useSelector((state) => state.userUpdateProfile)
+  const { success } = userUpdateProfile
+
   useEffect(() => {
     if (!userInfo) {
-      history.push('/login')
+      history.push('/signin')
     } else {
       if (!user.name) {
         dispatch(getUserDetails('profile'))
@@ -38,7 +41,7 @@ const ProfileScreen = ({ history }) => {
     if (password !== confirmPass) {
       setMessage('Password do not match')
     } else {
-      console.log('Profile Updated!')
+      dispatch(updateUserProfile({ id: user._id, name, email, password }))
     }
   }
 
@@ -46,6 +49,9 @@ const ProfileScreen = ({ history }) => {
     <Row>
       <Col md={3}>
         <h2 className='mb-3'>User Profile</h2>
+        {success && (
+          <Message variant='success'>Profile Successfully Updated!</Message>
+        )}
         {message && <Message variant='danger'>{message}</Message>}
         {error && <Message variant='danger'>{error}</Message>}
         {loading && (
@@ -77,7 +83,7 @@ const ProfileScreen = ({ history }) => {
             <Form.Label>Password</Form.Label>
             <Form.Control
               type='password'
-              placeholder='Enter password'
+              placeholder='New password'
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             ></Form.Control>
@@ -86,7 +92,7 @@ const ProfileScreen = ({ history }) => {
             <Form.Label>Confirm Password</Form.Label>
             <Form.Control
               type='password'
-              placeholder='Confirm password'
+              placeholder='Confirm New password'
               value={confirmPass}
               onChange={(e) => setConfirmPass(e.target.value)}
             ></Form.Control>
