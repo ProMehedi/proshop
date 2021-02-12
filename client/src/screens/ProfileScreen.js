@@ -25,7 +25,7 @@ const ProfileScreen = ({ history }) => {
 
   useEffect(() => {
     if (!userInfo) {
-      history.push('/signin')
+      history.push('/login')
     } else {
       if (!user.name) {
         dispatch(getUserDetails('profile'))

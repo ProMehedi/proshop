@@ -9,7 +9,7 @@ import Message from '../components/Message'
 
 const LoginScreen = ({ location, history }) => {
   const [email, setEmail] = useState('')
-  const [pass, setPass] = useState('')
+  const [password, setPassword] = useState('')
 
   const dispatch = useDispatch()
 
@@ -26,7 +26,7 @@ const LoginScreen = ({ location, history }) => {
 
   const submitHandler = (e) => {
     e.preventDefault()
-    dispatch(login(email, pass))
+    dispatch(login(email, password))
   }
 
   return (
@@ -53,8 +53,8 @@ const LoginScreen = ({ location, history }) => {
           <Form.Control
             type='password'
             placeholder='Enter password'
-            value={pass}
-            onChange={(e) => setPass(e.target.value)}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           ></Form.Control>
         </Form.Group>
         <Button type='submit' variant='primary'>
@@ -66,7 +66,7 @@ const LoginScreen = ({ location, history }) => {
           New Customer?{' '}
           <Link to={redirect ? `/register?redirect=${redirect}` : '/register'}>
             Register Now
-          </Link>{' '}
+          </Link>
         </Col>
       </Row>
     </FormContainer>
