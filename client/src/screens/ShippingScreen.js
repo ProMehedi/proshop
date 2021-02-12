@@ -34,8 +34,8 @@ const ShippingScreen = ({ history }) => {
     <FormContainer>
       <CheckoutSteps step1 step2 />
 
-      <h1 className='mb-3'>Shpping</h1>
-      <Form onSubmit={submitHandler}>
+      <h3 className='mb-3'>Shpping</h3>
+      <Form onSubmit={submitHandler} className='border-top pt-3'>
         <Form.Group controlId='address'>
           <Form.Label>Address</Form.Label>
           <Form.Control
