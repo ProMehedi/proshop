@@ -25,50 +25,51 @@ const PaymentScreen = ({ history }) => {
   }
 
   return (
-    <FormContainer>
+    <>
       <CheckoutSteps step1 step2 step3 />
-
-      <h3 className='mb-3'>Payment Methods</h3>
-      <Form onSubmit={submitHandler} className='border-top pt-3'>
-        <Form.Group controlId='address'>
-          <Form.Label as='legend'>Select Payment Method</Form.Label>
-          <Form.Check
-            className='border p-2 pl-4 my-2 d-block rounded'
-            type='radio'
-            label='PayPal or Credit Cart'
-            id='PayPal'
-            name='paymentMethod'
-            value='PayPal'
-            checked
-            onChange={(e) => setPaymentMethod(e.target.value)}
-          ></Form.Check>
-          <Form.Check
-            className='border p-2 pl-4 my-2 d-block rounded'
-            type='radio'
-            label='Stripe'
-            id='Stripe'
-            name='paymentMethod'
-            value='Stripe'
-            disabled
-            onChange={(e) => setPaymentMethod(e.target.value)}
-          ></Form.Check>
-        </Form.Group>
-        <Row>
-          <Col>
-            <LinkContainer to='/shipping'>
-              <Button type='button' variant='secondary'>
-                <i className='fa fa-angle-double-left'></i> GO BACK
+      <FormContainer>
+        <h3 className='mb-3'>Payment Methods</h3>
+        <Form onSubmit={submitHandler} className='border-top pt-3'>
+          <Form.Group controlId='address'>
+            <Form.Label as='legend'>Select Payment Method</Form.Label>
+            <Form.Check
+              className='border p-2 pl-4 my-2 d-block rounded'
+              type='radio'
+              label='PayPal or Credit Cart'
+              id='PayPal'
+              name='paymentMethod'
+              value='PayPal'
+              checked
+              onChange={(e) => setPaymentMethod(e.target.value)}
+            ></Form.Check>
+            <Form.Check
+              className='border p-2 pl-4 my-2 d-block rounded'
+              type='radio'
+              label='Stripe'
+              id='Stripe'
+              name='paymentMethod'
+              value='Stripe'
+              disabled
+              onChange={(e) => setPaymentMethod(e.target.value)}
+            ></Form.Check>
+          </Form.Group>
+          <Row>
+            <Col>
+              <LinkContainer to='/shipping'>
+                <Button type='button' variant='secondary'>
+                  <i className='fa fa-angle-double-left'></i> GO BACK
+                </Button>
+              </LinkContainer>
+            </Col>
+            <Col className='text-right'>
+              <Button type='submit' variant='primary'>
+                CONTINUE <i className='fa fa-angle-double-right'></i>
               </Button>
-            </LinkContainer>
-          </Col>
-          <Col className='text-right'>
-            <Button type='submit' variant='primary'>
-              CONTINUE <i className='fa fa-angle-double-right'></i>
-            </Button>
-          </Col>
-        </Row>
-      </Form>
-    </FormContainer>
+            </Col>
+          </Row>
+        </Form>
+      </FormContainer>
+    </>
   )
 }
 

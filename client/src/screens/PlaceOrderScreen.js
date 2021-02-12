@@ -33,8 +33,8 @@ const PlaceOrderScreen = ({ history }) => {
     if (success) {
       history.push(`/order/${order._id}`)
     }
-  }, [history, success, order])
-
+    // eslint-disable-next-line
+  }, [history, success])
   const placeOrderHandler = () => {
     dispatch(
       createOrder({
@@ -47,7 +47,6 @@ const PlaceOrderScreen = ({ history }) => {
         totalPrice: cart.totalPrice,
       })
     )
-    console.log(success)
   }
 
   const addDecimals = (num) => {
@@ -163,6 +162,11 @@ const PlaceOrderScreen = ({ history }) => {
                   </Col>
                 </Row>
               </ListGroup.Item>
+              {error && (
+                <ListGroup.Item>
+                  <Message variant='danger'>{error}</Message>
+                </ListGroup.Item>
+              )}
               <ListGroup.Item>
                 <Button
                   type='button'
