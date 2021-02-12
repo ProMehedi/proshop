@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import { Button, Form } from 'react-bootstrap'
+import { Button, Col, Form, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
+import { LinkContainer } from 'react-router-bootstrap'
 import { savePaymentMethod } from '../actions/cartActions'
 import CheckoutSteps from '../components/CheckoutSteps'
 import FormContainer from '../components/FormContainer'
@@ -12,19 +13,6 @@ const PaymentScreen = ({ history }) => {
   if (!shippingAddress) {
     history.push('/shipping')
   }
-
-  const [address, setAddress] = useState(
-    shippingAddress.address ? shippingAddress.address : ''
-  )
-  const [city, setCity] = useState(
-    shippingAddress.city ? shippingAddress.city : ''
-  )
-  const [postalCode, setPostalCode] = useState(
-    shippingAddress.postalCode ? shippingAddress.postalCode : ''
-  )
-  const [country, setCountry] = useState(
-    shippingAddress.country ? shippingAddress.country : ''
-  )
 
   const [paymentMethod, setPaymentMethod] = useState('PayPal')
 
@@ -52,6 +40,7 @@ const PaymentScreen = ({ history }) => {
             name='paymentMethod'
             value='PayPal'
             checked
+            onChange={(e) => setPaymentMethod(e.target.value)}
           ></Form.Check>
           <Form.Check
             className='border p-2 pl-4 my-2 d-block rounded'
@@ -61,11 +50,23 @@ const PaymentScreen = ({ history }) => {
             name='paymentMethod'
             value='Stripe'
             disabled
+            onChange={(e) => setPaymentMethod(e.target.value)}
           ></Form.Check>
         </Form.Group>
-        <Button type='submit' variant='primary'>
-          CONTINUE
-        </Button>
+        <Row>
+          <Col>
+            <LinkContainer to='/shipping'>
+              <Button type='button' variant='secondary'>
+                <i className='fa fa-angle-double-left'></i> GO BACK
+              </Button>
+            </LinkContainer>
+          </Col>
+          <Col className='text-right'>
+            <Button type='submit' variant='primary'>
+              CONTINUE <i className='fa fa-angle-double-right'></i>
+            </Button>
+          </Col>
+        </Row>
       </Form>
     </FormContainer>
   )
