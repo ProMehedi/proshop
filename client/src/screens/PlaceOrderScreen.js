@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { Button, Card, Col, Image, ListGroup, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
+import { LinkContainer } from 'react-router-bootstrap'
 import { Link } from 'react-router-dom'
 import { createOrder } from '../actions/orderActions'
 import CheckoutSteps from '../components/CheckoutSteps'
@@ -108,6 +109,11 @@ const PlaceOrderScreen = ({ history }) => {
               </ListGroup.Item>
             </ListGroup>
           </Card>
+          <LinkContainer to='/payment' className='mt-3'>
+            <Button type='button' variant='secondary'>
+              <i className='fa fa-angle-double-left'></i> GO BACK
+            </Button>
+          </LinkContainer>
         </Col>
         <Col md={4}>
           <Card>
