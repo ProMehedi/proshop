@@ -130,7 +130,7 @@ const OrderScreen = ({ match }) => {
             <Card>
               <ListGroup variant='flush'>
                 <ListGroup.Item>
-                  <h4>Order Summary</h4>
+                  <h4 className='text-center'>Order Summary</h4>
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <Row>
