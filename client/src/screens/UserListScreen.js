@@ -69,20 +69,19 @@ const UserListScreen = ({ history }) => {
                   )}
                 </td>
                 <td className='text-center'>
-                  <LinkContainer to={`/user/${user._id}/edit`}>
-                    <>
-                      <Button variant='dark' className='btn-sm'>
-                        <i className='fas fa-edit'></i>
-                      </Button>
-                      <Button
-                        variant='danger'
-                        className='btn-sm ml-2'
-                        onClick={() => deleteHandler(user._id)}
-                      >
-                        <i className='fas fa-trash'></i>
-                      </Button>
-                    </>
+                  <LinkContainer to={`/admin/user/${user._id}/edit`}>
+                    <Button variant='dark' className='btn-sm'>
+                      <i className='fas fa-edit'></i>
+                    </Button>
                   </LinkContainer>
+
+                  <Button
+                    variant='danger'
+                    className='btn-sm ml-2'
+                    onClick={() => deleteHandler(user._id)}
+                  >
+                    <i className='fas fa-trash'></i>
+                  </Button>
                 </td>
               </tr>
             ))}
