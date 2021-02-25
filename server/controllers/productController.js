@@ -23,12 +23,12 @@ export const getProductById = asyncHandler(async (req, res) => {
 export const createProduct = asyncHandler(async (req, res) => {
   const product = new Product({
     user: req.user._id,
-    name: req.body.name,
-    description: req.body.description,
-    image: req.body.image,
-    brand: req.body.brand,
+    name: req.body.name || 'Product name',
+    description: req.body.description || 'Product description',
+    image: req.body.image || 'https://picsum.photos/600/500',
+    brand: req.body.brand || 'sample-brand',
     price: req.body.price,
-    category: req.body.category,
+    category: req.body.category || 'sample-category',
     countInStock: req.body.countInStock,
     rating: req.body.rating,
     reviews: req.body.reviews,

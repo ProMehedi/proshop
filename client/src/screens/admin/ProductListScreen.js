@@ -1,12 +1,17 @@
 import React, { useEffect } from 'react'
 import { Button, Col, Row, Table } from 'react-bootstrap'
-import SyncLoader from 'react-spinners/SyncLoader'
+import { ClipLoader, SyncLoader } from 'react-spinners'
 import { useDispatch, useSelector } from 'react-redux'
 import { LinkContainer } from 'react-router-bootstrap'
 import Message from '../../components/Message'
-import { deleteProduct, listProducts } from '../../actions/productActions'
+import {
+  createProduct,
+  deleteProduct,
+  listProducts,
+} from '../../actions/productActions'
+import { PRODUCT_CREATE_RESET } from '../../constants/productContants'
 
-const ProductListScreen = ({ history, match }) => {
+const ProductListScreen = ({ history }) => {
   const dispatch = useDispatch()
 
   const productList = useSelector((state) => state.productList)
@@ -15,19 +20,40 @@ const ProductListScreen = ({ history, match }) => {
   const productDelete = useSelector((state) => state.productDelete)
   const { error: errorDelete, success: successDelete } = productDelete
 
+  const productCreate = useSelector((state) => state.productCreate)
+  const {
+    error: errorCreate,
+    success: successCreate,
+    loading: loadingCreate,
+    product: createdProduct,
+  } = productCreate
+
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
 
   useEffect(() => {
-    if (userInfo && userInfo.isAdmin) {
-      dispatch(listProducts())
-    } else {
+    dispatch({ type: PRODUCT_CREATE_RESET })
+
+    if (!userInfo.isAdmin) {
       history.push('/login')
     }
-  }, [dispatch, userInfo, history, successDelete])
 
-  const createProductHandler = (id) => {
-    console.log('create!')
+    if (successCreate) {
+      history.push(`admin/product/${createdProduct._id}`)
+    } else {
+      dispatch(listProducts())
+    }
+  }, [
+    dispatch,
+    userInfo,
+    history,
+    successDelete,
+    successCreate,
+    createdProduct,
+  ])
+
+  const createProductHandler = () => {
+    dispatch(createProduct())
   }
 
   const deleteHandler = (id) => {
@@ -44,11 +70,17 @@ const ProductListScreen = ({ history, match }) => {
         </Col>
         <Col className='text-right'>
           <Button className='my-3' onClick={createProductHandler}>
-            NEW PRODUCT <i className='fas fa-plus'></i>
+            NEW PRODUCT{' '}
+            {loadingCreate ? (
+              <ClipLoader color='#fff' size={20} />
+            ) : (
+              <i className='fas fa-plus'></i>
+            )}
           </Button>
         </Col>
       </Row>
       {errorDelete && <Message variant='danger'>{errorDelete}</Message>}
+      {errorCreate && <Message variant='danger'>{errorCreate}</Message>}
       {loading ? (
         <div className='lazyLoader text-center m-4'>
           <SyncLoader color='#ff6138' size={10} />
