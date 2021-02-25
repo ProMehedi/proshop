@@ -4,13 +4,16 @@ import SyncLoader from 'react-spinners/SyncLoader'
 import { useDispatch, useSelector } from 'react-redux'
 import { LinkContainer } from 'react-router-bootstrap'
 import Message from '../../components/Message'
-import { listProducts } from '../../actions/productActions'
+import { deleteProduct, listProducts } from '../../actions/productActions'
 
 const ProductListScreen = ({ history, match }) => {
   const dispatch = useDispatch()
 
   const productList = useSelector((state) => state.productList)
   const { loading, error, products } = productList
+
+  const productDelete = useSelector((state) => state.productDelete)
+  const { error: errorDelete, success: successDelete } = productDelete
 
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
@@ -21,19 +24,15 @@ const ProductListScreen = ({ history, match }) => {
     } else {
       history.push('/login')
     }
-  }, [dispatch, userInfo, history])
+  }, [dispatch, userInfo, history, successDelete])
 
   const createProductHandler = (id) => {
-    if (window.confirm('Are you sure?')) {
-      // dispatch(removeUser(id))
-      console.log('Delete!')
-    }
+    console.log('create!')
   }
 
   const deleteHandler = (id) => {
     if (window.confirm('Are you sure?')) {
-      // dispatch(removeUser(id))
-      console.log('Delete!')
+      dispatch(deleteProduct(id))
     }
   }
 
@@ -49,6 +48,7 @@ const ProductListScreen = ({ history, match }) => {
           </Button>
         </Col>
       </Row>
+      {errorDelete && <Message variant='danger'>{errorDelete}</Message>}
       {loading ? (
         <div className='lazyLoader text-center m-4'>
           <SyncLoader color='#ff6138' size={10} />
