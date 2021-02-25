@@ -45,11 +45,14 @@ const regiterUser = asyncHandler(async (req, res) => {
   }
 })
 
+// @desc    Get User Profile
+// @route   GET /api/v1/users/profile
+// @access  Private
 const getUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id)
 
   if (user) {
-    res.json({
+    res.status(201).json({
       _id: user._id,
       name: user.name,
       email: user.email,
@@ -57,7 +60,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
     })
   } else {
     res.status(404)
-    throw new Error('User not found!')
+    throw new Error('User not Found!')
   }
 })
 
@@ -115,7 +118,7 @@ const getUserById = asyncHandler(async (req, res) => {
 })
 
 const updateUser = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.params._id)
+  const user = await User.findById(req.params.id)
 
   if (user) {
     user.name = req.body.name || user.name

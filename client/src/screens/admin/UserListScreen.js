@@ -2,9 +2,9 @@ import React, { useEffect } from 'react'
 import { Button, Table } from 'react-bootstrap'
 import SyncLoader from 'react-spinners/SyncLoader'
 import { useDispatch, useSelector } from 'react-redux'
-import { listUsers, removeUser } from '../actions/userActions'
-import Message from '../components/Message'
+import { listUsers, removeUser } from '../../actions/userActions'
 import { LinkContainer } from 'react-router-bootstrap'
+import Message from '../../components/Message'
 
 const UserListScreen = ({ history }) => {
   const dispatch = useDispatch()
