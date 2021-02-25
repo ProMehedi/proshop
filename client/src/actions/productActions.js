@@ -101,8 +101,6 @@ export const updateProduct = (product) => async (dispatch, getState) => {
       config
     )
 
-    dispatch({ type: PRODUCT_DETAILS_SUCCESS })
-
     dispatch({ type: PRODUCT_UPDATE_SUCCESS, payload: data })
   } catch (error) {
     dispatch({

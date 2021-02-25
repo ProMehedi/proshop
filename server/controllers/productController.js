@@ -30,9 +30,9 @@ export const createProduct = asyncHandler(async (req, res) => {
     price: req.body.price,
     category: req.body.category || 'sample-category',
     countInStock: req.body.countInStock,
-    rating: req.body.rating,
+    rating: req.body.rating || 0,
     reviews: req.body.reviews,
-    numReviews: req.body.numReviews,
+    numReviews: req.body.numReviews || 0,
   })
 
   const createdProduct = await product.save()
@@ -72,9 +72,9 @@ export const updateProduct = asyncHandler(async (req, res) => {
     product.price = price
     product.category = category
     product.countInStock = countInStock
-    product.rating = rating
+    product.rating = rating || 0
     product.reviews = reviews
-    product.numReviews = numReviews
+    product.numReviews = numReviews || 0
 
     const updatedProduct = await product.save()
     res.status(201).json(updatedProduct)

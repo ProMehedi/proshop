@@ -3,10 +3,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import SyncLoader from 'react-spinners/SyncLoader'
 import { Link } from 'react-router-dom'
 import { Button, Form } from 'react-bootstrap'
-import { listProductDetails } from '../../actions/productActions'
+import { listProductDetails, updateProduct } from '../../actions/productActions'
 import FormContainer from '../../components/FormContainer'
 import Message from '../../components/Message'
 import { ClipLoader } from 'react-spinners'
+import { PRODUCT_UPDATE_RESET } from '../../constants/productContants'
 
 const ProductEditScreen = ({ match, history }) => {
   const productId = match.params.id
@@ -24,22 +25,46 @@ const ProductEditScreen = ({ match, history }) => {
   const productDetails = useSelector((state) => state.productDetails)
   const { loading, error, product } = productDetails
 
+  const productUpdate = useSelector((state) => state.productUpdate)
+  const {
+    loading: loadingUpdate,
+    error: errorUpdate,
+    success: successUpdate,
+  } = productUpdate
+
   useEffect(() => {
-    if (!product.name || product._id !== productId) {
-      dispatch(listProductDetails(productId))
+    if (successUpdate) {
+      dispatch({ type: PRODUCT_UPDATE_RESET })
+      history.push('/admin/products')
     } else {
-      setName(product.name)
-      setPrice(product.price)
-      setImage(product.image)
-      setBrand(product.brand)
-      setCountInStock(product.countInStock)
-      setCategory(product.category)
-      setDescription(product.description)
+      if (!product.name || product._id !== productId) {
+        dispatch(listProductDetails(productId))
+      } else {
+        setName(product.name)
+        setPrice(product.price)
+        setImage(product.image)
+        setBrand(product.brand)
+        setCountInStock(product.countInStock)
+        setCategory(product.category)
+        setDescription(product.description)
+      }
     }
-  }, [dispatch, productId, product, history])
+  }, [dispatch, productId, product, history, successUpdate])
 
   const submitHandler = (e) => {
     e.preventDefault()
+    dispatch(
+      updateProduct({
+        _id: productId,
+        name,
+        price,
+        image,
+        brand,
+        countInStock,
+        category,
+        description,
+      })
+    )
   }
 
   return (
@@ -49,6 +74,7 @@ const ProductEditScreen = ({ match, history }) => {
       </Link>
       <FormContainer>
         <h1 className='mb-3'>Edit User</h1>
+        {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>}
         {error && <Message variant='danger'>{error}</Message>}
         {loading && (
           <div className='lazyLoader text-center m-4'>
@@ -122,7 +148,7 @@ const ProductEditScreen = ({ match, history }) => {
           </Form.Group>
           <Button type='submit' variant='primary'>
             UPDATE{' '}
-            {loading ? (
+            {loadingUpdate ? (
               <ClipLoader color='#fff' size={20} />
             ) : (
               <i className='fas fa-upload'></i>
