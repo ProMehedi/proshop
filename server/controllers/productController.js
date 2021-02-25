@@ -45,6 +45,45 @@ export const createProduct = asyncHandler(async (req, res) => {
   }
 })
 
+// @desc    Update A Product
+// @route   PUT /api/v1/products/:id
+// @access  Private
+export const updateProduct = asyncHandler(async (req, res) => {
+  const product = await Product.findById(req.params.id)
+
+  const {
+    name,
+    description,
+    image,
+    brand,
+    price,
+    category,
+    countInStock,
+    rating,
+    reviews,
+    numReviews,
+  } = req.body
+
+  if (product) {
+    product.name = name
+    product.description = description
+    product.image = image
+    product.brand = brand
+    product.price = price
+    product.category = category
+    product.countInStock = countInStock
+    product.rating = rating
+    product.reviews = reviews
+    product.numReviews = numReviews
+
+    const updatedProduct = await product.save()
+    res.status(201).json(updatedProduct)
+  } else {
+    res.status(401)
+    throw new Error('Product not found!')
+  }
+})
+
 // @desc    Delete A Product By Id
 // @route   DELETE /api/v1/products/:id
 // @access  Private/Admin
